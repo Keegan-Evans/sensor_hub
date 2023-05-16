@@ -1,8 +1,9 @@
-FROM alpine
-RUN apk update && apk add hostapd iw dhcp vim iptables
+FROM alpine:3.14
+RUN apk update && apk add hostapd iw dhcp iptables 
 
 # Configure Hostapd (default will be open)
 ADD confs/hostapd_confs/open.conf /etc/hostapd/hostapd.conf
+
 # Configure DHCPD
 ADD confs/dhcpd.conf /etc/dhcp/dhcpd.conf
 RUN touch /var/lib/dhcp/dhcpd.leases

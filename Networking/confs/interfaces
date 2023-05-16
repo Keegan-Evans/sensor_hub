@@ -4,4 +4,5 @@ iface wlan0 inet static
         netmask 255.255.255.0
 
 auto eth0
+
 iface eth0 inet dhcp
