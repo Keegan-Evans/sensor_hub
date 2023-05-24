@@ -1,0 +1,45 @@
+services:
+  # network:        NOT SURE THIS IS NECESSARY
+    # image: my_custom_network_image
+    # build: ./network_setup
+
+  mqtt_broker:
+    image: eclipse-mosquitto
+    ports:
+      - "1883:1883"
+    networks:
+      - host
+
+  funnel:
+    image: node-red
+    ports:
+      - "1880:1880"
+    networks:
+      - host
+
+  database:
+    image: influxdb
+    ports:
+      - "8086:8086"
+
+    networks:
+      - host
+
+  dashboard:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - host
+
+  access:
+    image: portainer
+    ports:
+      - "9443:9443"
+    networks:
+      - host
+      - host
+
+networks:
+  - host
+#  - container_net?
