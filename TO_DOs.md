@@ -1,6 +1,0 @@
-- [ ] Cook up docker images from the running instances on RPi
-- [ ] Look into both a front end and back end network
-- [ ] Add build sections to each service
-- [ ] Configure Volumes for data recording
-- [ ] Create service to share data to cloud server
-- [ ]
