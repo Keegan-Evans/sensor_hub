@@ -44,7 +44,7 @@ services:
     expose:
       - "3000/tcp"
 
-    hostname: "sensorhubtestbed"
+    hostname: "sensor_hub"
 
     image: "grafana/grafana:latest"
 
@@ -59,9 +59,9 @@ services:
 
     network_mode: "host"
 
-    restart: "unless-stopped"
+    restart: "always"
 
-    stdin_open: yes
+    stdin_open: true
 
     user: "472"
 
@@ -109,9 +109,10 @@ services:
     expose:
       - "8086/tcp"
 
-    hostname: "sensorhubtestbed"
+    hostname: "sensor_hub"
 
-    image: "arm32v7/influxdb:latest"
+    # Need to figure out how to build for multiple architectures
+    image: "influxdb:latest"
 
     ipc: "private"
 
@@ -121,13 +122,12 @@ services:
 
     network_mode: "host"
 
-    restart: "unless-stopped"
+    restart: "always"
 
-    stdin_open: yes
+    stdin_open: true
 
     volumes:
-      - "influx_volume:/influxdb/data"
-      - "3313d9bcfeef0e1cea03544082583e3ccc75ce22f709e1d959e801aaeb0642cc:/var/lib/influxdb"
+      - "influx_volume:/var/lib/influxdb"
 
   mqtt:
 
@@ -177,7 +177,7 @@ services:
     expose:
       - "1883/tcp"
 
-    hostname: "sensorhubtestbed"
+    hostname: "sensor_hub"
 
     image: "eclipse-mosquitto:latest"
 
@@ -193,9 +193,9 @@ services:
 
     network_mode: "host"
 
-    restart: "unless-stopped"
+    restart: "always"
 
-    stdin_open: yes
+    stdin_open: true
 
     volumes:
       - "mqtt_config:/mosquitto/config"
@@ -245,7 +245,7 @@ services:
     expose:
       - "1880/tcp"
 
-    hostname: "sensorhubtestbed""
+    hostname: "sensor_hub"
 
     image: "nodered/node-red:latest"
 
@@ -271,7 +271,7 @@ services:
 
     network_mode: "host"
 
-    restart: "unless-stopped"
+    restart: "always"
 
     user: "node-red"
 
@@ -290,7 +290,7 @@ services:
     environment:
       - "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
 
-    hostname: "sensorhubtestbed"
+    hostname: "sensor_hub"
 
     image: "portainer/portainer-ce:latest"
 
@@ -367,25 +367,17 @@ services:
     restart: "always"
 
     volumes:
-      - "portainer_data:/data"
-      - "/var/run/docker.sock:/var/run/docker.sock"
+      - portainer_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
 
     working_dir: "/"
 
 version: "3.6"
 
 volumes:
-  3313d9bcfeef0e1cea03544082583e3ccc75ce22f709e1d959e801aaeb0642cc:
-    external: yes
   influx_volume:
-    external: yes
   mqtt_config:
-    external: yes
   mqtt_data:
-    external: yes
   mqtt_log:
-    external: yes
   node_red_data:
-    external: yes
   portainer_data:
-    external: yes
